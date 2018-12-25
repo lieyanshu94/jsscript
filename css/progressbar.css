@@ -1,0 +1,152 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.bar-box {
+	width: 800px;
+	height: 120px;
+	position: relative;
+}
+
+.bar-node {
+	border: 2px solid;
+	border-radius: 50%;
+	display: block;
+	padding: 6px;
+	background: #ffffff;
+	position: absolute;
+	top: 54px;
+}
+
+.bar-node-small {
+	border: 2px solid;
+	border-radius: 50%;
+	display: block;
+	padding: 4px;
+	background: #ffffff;
+	position: absolute;
+	top: 55px;
+}
+
+.bar-node-blue {
+	border-color: #19A9F5;
+	z-index: 10;
+}
+
+.bar-node-red {
+	border-color: #d81e06;
+	z-index: 10;
+}
+.bar-node-yellow{
+	border-color: #ffcc14;
+	z-index: 10;
+}
+.bar-node-gray {
+	border-color: #bfbfbf;
+	z-index: 10;
+}
+
+.bar-slip {
+	position: absolute;
+	display: inline-block;
+	height: 10px;
+	top: 56px;
+}
+
+.bar-slip-small {
+	position: absolute;
+	display: inline-block;
+	height: 6px;
+	top: 58px;
+}
+
+.bar-slip-background{
+	position: absolute;
+	display: inline-block;
+	height: 10px;
+	top: 56px;
+	z-index: 3;
+	background: #FFFFFF;
+}
+
+.bar-slip-blue {
+	background: #19a9f5;
+	z-index: 2;
+}
+.bar-slip-blue-small {
+	background: #19a9f5;
+	z-index: 4;
+}
+
+.bar-slip-red {
+	background: #d81e06;
+	z-index: 2;
+}
+.bar-slip-yellow{
+	background: #ffcc14;
+	z-index: 5;
+}
+
+.bar-slip-gray {
+	background: #d4d4d4;
+	z-index: 1;
+}
+.bar-slip-gray-small {
+	background: #d4d4d4;
+	z-index: 4;
+}
+.bar-title{
+	display: inline-block;
+	position: absolute;
+	color: #2b2b2b;
+	font-size: 14px;
+	font-family: "黑体";
+	top: 20px;
+	left: 34px;
+}
+.bar-date{
+	display: inline-block;
+	position: absolute;
+	color: #2b2b2b;
+	font-size: 14px;
+	font-family: "黑体";
+	top: 84px;
+	left: 10px;
+}
+.bar-image{
+	display: inline-block;
+	position: absolute;
+	height: 24px;
+	width: 24px;
+	top: 32px;
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+.bar-image-red{
+	background-image: url(../img/present_red.png);
+}
+.bar-image-blue{
+	background-image: url(../img/present_blue.png);
+}
+.bar-stage-title{
+	display: inline-block;
+    position: absolute;
+    top: 23px;
+    left: 289px;
+    width: 197px;
+    height: 30px;
+    line-height: 30px;
+    background: #ffff0052;
+    text-align: center;
+    color: #2b2b2b;
+    font-size: 16px;
+	
+}
+.bar-stage-name{
+	display: inline-block;
+    position: absolute;
+    color: #2d2d2d;
+    top: 72px;
+    font-size: 14px;
+}

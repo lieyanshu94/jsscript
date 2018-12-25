@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/progressbar.css"/>
+		<style>
+			table{
+				border-collapse:collapse; 
+			}
+			table thead tr td {
+				height: 40px;
+				font-family: "黑体";
+				background: #376dc5;
+				color: #FFFFFF;
+			}
+			table tr td {
+				text-align: center;
+			}
+			table tbody tr td {
+				height: 120px;
+				font-family: "黑体";
+				font-size: 20px;
+				
+			}
+			table tbody tr:nth-child(odd) {
+				background: #f5f5f5;
+			}
+			.show-title{
+				height: 100px;
+				background: #376dc5;
+				color: #FFFFFF;
+				text-align: center;
+				line-height: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="titile" class="show-title">
+			<h1>系统项目进度展览</h1>
+		</div>
+		<div id="table">
+			<table width="100%">
+				<thead>
+					<tr>
+						<td width="5%"></td>
+						<td width="12%"><h2>项目名称</h2></td>
+						<td width="12%"><h2>项目经理</h2></td>
+						<td width="48%" style="text-align:left;"><h2 style="margin-left: 30px;">计划时间</h2></td>
+						<td width="12%"><h2>当前阶段</h2></td>
+						<td width="12%"><h2>当前状态</h2></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>01</td>
+						<td>第一项目</td>
+						<td>张三</td>
+						<td>
+							<div class = 'bar-box' style = 'width: 760 px;height: 120px;'><span class='bar-node bar-node-blue' style = 'left: 40px;' ></span><span class='bar-title' style='left:33px;'>立项</span><span class='bar-date' style='left:12px;'>2018-11-14</span><span class='bar-image bar-image-red' style = 'left: 176.5px;'></span><span class='bar-node bar-node-red' style = 'left: 135px;' ></span><span class='bar-title' style='left:114px;'>深化设计</span><span class='bar-date' style='left:107px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 230px;' ></span><span class='bar-title' style='left:209px;'>施工准备</span><span class='bar-date' style='left:202px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 515px;' ></span><span class='bar-title' style='left:508px;'>调试</span><span class='bar-date' style='left:487px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 610px;' ></span><span class='bar-title' style='left:596px;'>试运行</span><span class='bar-date' style='left:582px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 705px;' ></span><span class='bar-title' style='left:698px;'>竣工</span><span class='bar-date' style='left:677px;'>2018-11-14</span><span class='bar-slip bar-slip-gray' style = 'width:665px;left:46px'></span><span class='bar-stage-title'>施工阶段</span><span class='bar-slip bar-slip-blue' style = 'width:95px;left:46px'></span><span class='bar-slip-background' style = 'width:285px;left:236px'></span><span class='bar-slip-small bar-slip-gray-small' style = 'width:285px;left:236px'></span><span class='bar-slip bar-slip-red' style = 'width:47.5px;left:141px'></span><span class='bar-stage-name' style='left:279.25px'>材料进场</span><span class='bar-stage-name' style = 'left: 350.5px;'>隐蔽工程</span><span class='bar-stage-name' style = 'left: 421.75px;'>设备安装</span><span class='bar-node-small bar-node-gray' style = 'left: 301.25px;'></span><span class='bar-node-small bar-node-gray' style = 'left: 372.5px;'></span><span class='bar-node-small bar-node-gray' style = 'left: 443.75px;'></span><span class='bar-slip-small bar-slip-gray' style = 'width:35.625px;left:307.25px'></span><span class='bar-slip-small bar-slip-gray' style = 'width:35.625px;left:378.5px'></span><span class='bar-slip-small bar-slip-gray' style = 'width:35.625px;left:449.75px'></span></div>
+						</td>
+						<td>深化设计</td>
+						<td style="color:blue">正常</td>
+					</tr>
+					<tr>
+						<td>02</td>
+						<td>第二项目</td>
+						<td>李四</td>
+						<td>
+							<div class = 'bar-box' style = 'width: 760 px;height: 120px;'><span class='bar-image bar-image-red' style = 'left: 81.5px;'></span><span class='bar-node bar-node-red' style = 'left: 40px;' ></span><span class='bar-title' style='left:33px;'>立项</span><span class='bar-date' style='left:12px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 135px;' ></span><span class='bar-title' style='left:114px;'>深化设计</span><span class='bar-date' style='left:107px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 230px;' ></span><span class='bar-title' style='left:209px;'>施工准备</span><span class='bar-date' style='left:202px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 515px;' ></span><span class='bar-title' style='left:508px;'>调试</span><span class='bar-date' style='left:487px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 610px;' ></span><span class='bar-title' style='left:596px;'>试运行</span><span class='bar-date' style='left:582px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 705px;' ></span><span class='bar-title' style='left:698px;'>竣工</span><span class='bar-date' style='left:677px;'>2018-11-14</span><span class='bar-slip bar-slip-gray' style = 'width:665px;left:46px'></span><span class='bar-stage-title'>施工阶段</span><span class='bar-slip bar-slip-blue' style = 'width:0px;left:46px'></span><span class='bar-slip-background' style = 'width:285px;left:236px'></span><span class='bar-slip-small bar-slip-gray-small' style = 'width:285px;left:236px'></span><span class='bar-slip bar-slip-red' style = 'width:47.5px;left:46px'></span><span class='bar-stage-name' style='left:279.25px'>材料进场</span><span class='bar-stage-name' style = 'left: 350.5px;'>隐蔽工程</span><span class='bar-stage-name' style = 'left: 421.75px;'>设备安装</span><span class='bar-node-small bar-node-gray' style = 'left: 301.25px;'></span><span class='bar-node-small bar-node-gray' style = 'left: 372.5px;'></span><span class='bar-node-small bar-node-gray' style = 'left: 443.75px;'></span><span class='bar-slip-small bar-slip-gray' style = 'width:35.625px;left:307.25px'></span><span class='bar-slip-small bar-slip-gray' style = 'width:35.625px;left:378.5px'></span><span class='bar-slip-small bar-slip-gray' style = 'width:35.625px;left:449.75px'></span></div>
+						</td>
+						<td>立项</td>
+						<td style="color:blue">正常</td>
+					</tr>
+					<tr>
+						<td>03</td>
+						<td>第三项目</td>
+						<td>王五</td>
+						<td>
+							<div class = 'bar-box' style = 'width: 760 px;height: 120px;'><span class='bar-node bar-node-blue' style = 'left: 40px;' ></span><span class='bar-title' style='left:33px;'>立项</span><span class='bar-date' style='left:12px;'>2018-11-14</span><span class='bar-node bar-node-blue' style = 'left: 135px;' ></span><span class='bar-title' style='left:114px;'>深化设计</span><span class='bar-date' style='left:107px;'>2018-11-14</span><span class='bar-node bar-node-blue' style = 'left: 230px;' ></span><span class='bar-title' style='left:209px;'>施工准备</span><span class='bar-date' style='left:202px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 515px;' ></span><span class='bar-title' style='left:508px;'>调试</span><span class='bar-date' style='left:487px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 610px;' ></span><span class='bar-title' style='left:596px;'>试运行</span><span class='bar-date' style='left:582px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 705px;' ></span><span class='bar-title' style='left:698px;'>竣工</span><span class='bar-date' style='left:677px;'>2018-11-14</span><span class='bar-slip bar-slip-gray' style = 'width:665px;left:46px'></span><span class='bar-stage-title'>施工阶段</span><span class='bar-slip bar-slip-blue' style = 'width:190px;left:46px'></span><span class='bar-slip-background' style = 'width:285px;left:236px'></span><span class='bar-slip-small bar-slip-gray-small' style = 'width:285px;left:236px'></span><span class='bar-stage-name' style='left:279.25px'>材料进场</span><span class='bar-stage-name' style = 'left: 350.5px;'>隐蔽工程</span><span class='bar-stage-name' style = 'left: 421.75px;'>设备安装</span><span class='bar-slip-small bar-slip-blue-small' style = 'width:71.25px;left:236px'></span><span class='bar-node-small bar-node-yellow' style = 'left: 301.25px;'></span><span class='bar-node-small bar-node-yellow' style = 'left: 372.5px;'></span><span class='bar-node-small bar-node-yellow' style = 'left: 443.75px;'></span><span class='bar-slip-small bar-slip-yellow' style = 'width:35.625px;left:307.25px'></span><span class='bar-slip-small bar-slip-yellow' style = 'width:35.625px;left:378.5px'></span><span class='bar-slip-small bar-slip-yellow' style = 'width:35.625px;left:449.75px'></span></div>
+						</td>
+						<td>施工阶段</td>
+						<td style="color:red">延期</td>
+					</tr>
+					<tr>
+						<td>01</td>
+						<td>第四项目</td>
+						<td>赵六</td>
+						<td>
+							<div class = 'bar-box' style = 'width: 760 px;height: 120px;'><span class='bar-node bar-node-blue' style = 'left: 40px;' ></span><span class='bar-title' style='left:33px;'>立项</span><span class='bar-date' style='left:12px;'>2018-11-14</span><span class='bar-node bar-node-blue' style = 'left: 135px;' ></span><span class='bar-title' style='left:114px;'>深化设计</span><span class='bar-date' style='left:107px;'>2018-11-14</span><span class='bar-node bar-node-blue' style = 'left: 230px;' ></span><span class='bar-title' style='left:209px;'>施工准备</span><span class='bar-date' style='left:202px;'>2018-11-14</span><span class='bar-node bar-node-blue' style = 'left: 515px;' ></span><span class='bar-title' style='left:508px;'>调试</span><span class='bar-date' style='left:487px;'>2018-11-14</span><span class='bar-node bar-node-blue' style = 'left: 610px;' ></span><span class='bar-title' style='left:596px;'>试运行</span><span class='bar-date' style='left:582px;'>2018-11-14</span><span class='bar-node bar-node-blue' style = 'left: 705px;' ></span><span class='bar-title' style='left:698px;'>竣工</span><span class='bar-date' style='left:677px;'>2018-11-14</span><span class='bar-slip bar-slip-gray' style = 'width:665px;left:46px'></span><span class='bar-stage-title'>施工阶段</span><span class='bar-slip bar-slip-blue' style = 'width:380px;left:46px'></span><span class='bar-slip bar-slip-blue' style = 'width:285px;left:426px'></span><span class='bar-slip-background' style = 'width:285px;left:236px'></span><span class='bar-slip-small bar-slip-blue-small' style = 'width:285px;left:236px'></span><span class='bar-stage-name' style='left:279.25px'>材料进场</span><span class='bar-stage-name' style = 'left: 350.5px;'>隐蔽工程</span><span class='bar-stage-name' style = 'left: 421.75px;'>设备安装</span><span class='bar-node-small bar-node-blue' style = 'left: 301.25px;'></span><span class='bar-node-small bar-node-blue' style = 'left: 372.5px;'></span><span class='bar-node-small bar-node-blue' style = 'left: 443.75px;'></span></div>
+						</td>
+						<td>竣工</td>
+						<td style="color:blue">正常</td>
+					</tr>
+					<tr>
+						<td>01</td>
+						<td>第五项目</td>
+						<td>宋七</td>
+						<td>
+							<div class = 'bar-box' style = 'width: 760 px;height: 120px;'><span class='bar-node bar-node-blue' style = 'left: 40px;' ></span><span class='bar-title' style='left:33px;'>立项</span><span class='bar-date' style='left:12px;'>2018-11-14</span><span class='bar-node bar-node-blue' style = 'left: 135px;' ></span><span class='bar-title' style='left:114px;'>深化设计</span><span class='bar-date' style='left:107px;'>2018-11-14</span><span class='bar-node bar-node-blue' style = 'left: 230px;' ></span><span class='bar-title' style='left:209px;'>施工准备</span><span class='bar-date' style='left:202px;'>2018-11-14</span><span class='bar-image bar-image-red' style = 'left: 556.5px;'></span><span class='bar-node bar-node-red' style = 'left: 515px;' ></span><span class='bar-title' style='left:508px;'>调试</span><span class='bar-date' style='left:487px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 610px;' ></span><span class='bar-title' style='left:596px;'>试运行</span><span class='bar-date' style='left:582px;'>2018-11-14</span><span class='bar-node bar-node-gray' style = 'left: 705px;' ></span><span class='bar-title' style='left:698px;'>竣工</span><span class='bar-date' style='left:677px;'>2018-11-14</span><span class='bar-slip bar-slip-gray' style = 'width:665px;left:46px'></span><span class='bar-stage-title'>施工阶段</span><span class='bar-slip bar-slip-blue' style = 'width:380px;left:46px'></span><span class='bar-slip bar-slip-blue' style = 'width:0px;left:426px'></span><span class='bar-slip-background' style = 'width:285px;left:236px'></span><span class='bar-slip-small bar-slip-blue-small' style = 'width:285px;left:236px'></span><span class='bar-slip bar-slip-red' style = 'width:47.5px;left:521px'></span><span class='bar-stage-name' style='left:279.25px'>材料进场</span><span class='bar-stage-name' style = 'left: 350.5px;'>隐蔽工程</span><span class='bar-stage-name' style = 'left: 421.75px;'>设备安装</span><span class='bar-node-small bar-node-blue' style = 'left: 301.25px;'></span><span class='bar-node-small bar-node-blue' style = 'left: 372.5px;'></span><span class='bar-node-small bar-node-blue' style = 'left: 443.75px;'></span></div>
+						</td>
+						<td>调试</td>
+						<td style="color:orange">预警</td>
+					</tr>
+					
+				</tbody>
+			</table>
+			
+		</div>
+	</body>
+</html>
