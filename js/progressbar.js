@@ -13,7 +13,7 @@ var Progressbar = function(data, tinydata) {
 		this.course = data["course"];
 	}
 }
-Progressbar.prototype.initData = function(data, tinydata) {
+Progressbar.prototype.initData = function(data) {
 	this.statearr = data["state"];
 	this.course = data["course"];
 }
@@ -90,8 +90,10 @@ Progressbar.prototype.makehtml = function() {
 	for (var i = 0; i < statearrlen; i++) {
 		var statename = statearr[i].state; //阶段名称
 		var statedate = statearr[i].date; //阶段日期
-		var nodeleft = (linewidthshort)?nodeleftpx + linewidthlong * i + tinyreadycount * linewidthshort : nodeleftpx + linewidthlong * i; //节点距左侧距离
-		var lineleft =(linewidthshort)? nodeleftpx + nodeheight / 2 + linewidthlong * i + tinyreadycount * linewidthshort : nodeleftpx + nodeheight / 2 + linewidthlong * i; //线距左侧距离
+		var nodeleft = (linewidthshort) ? nodeleftpx + linewidthlong * i + tinyreadycount * linewidthshort : nodeleftpx +
+			linewidthlong * i; //节点距左侧距离
+		var lineleft = (linewidthshort) ? nodeleftpx + nodeheight / 2 + linewidthlong * i + tinyreadycount * linewidthshort :
+			nodeleftpx + nodeheight / 2 + linewidthlong * i; //线距左侧距离
 		var valuelen = statename.length * fontsize; //文字域的宽度
 		var datelen = statedate.length * fontsize / 2; //日期域的宽度
 		var dateleft = nodeleft - (datelen - nodeheight) / 2; //日期距左侧距离
@@ -124,14 +126,15 @@ Progressbar.prototype.makehtml = function() {
 					var tinystatearr = tinyarr[j].tinystate;
 					var t = 0;
 					if (tinyarr[j].tinytitle != "") {
-						var titleleft = smallbackleft + tinyarr[j].tinystatecount*linewidthshort*0.1;
-						var titlewidth = parseInt(tinyarr[j].tinystatecount*linewidthshort*0.8)
-						html += "<span class='bar-stage-title' style='left:" + titleleft + "px;width:" + titlewidth + "px'>" + tinyarr[j].tinytitle + "</span>";
+						var titleleft = smallbackleft + tinyarr[j].tinystatecount * linewidthshort * 0.1;
+						var titlewidth = parseInt(tinyarr[j].tinystatecount * linewidthshort * 0.8)
+						html += "<span class='bar-stage-title' style='left:" + titleleft + "px;width:" + titlewidth + "px'>" + tinyarr[j]
+							.tinytitle + "</span>";
 					}
 					for (var tinystate of tinystatearr) {
 						var smallslipleft = smallbackleft + t * linewidthshort;
 						var smallnodeleft = smallslipleft - tinynodeheight / 2;
-						var nameleft = smallslipleft - 2*14;
+						var nameleft = smallslipleft - 2 * 14;
 						html += "<span class='bar-node-small bar-node-small-unknown' style = 'left: " + smallnodeleft + "px;'></span>" +
 							"<span class='bar-slip-small bar-slip-small-unknown' style = 'width:" + linewidthshort + "px;left:" +
 							smallslipleft + "px'></span>" +
@@ -152,7 +155,7 @@ Progressbar.prototype.giveClass = function($lable) {
 	var course = this.course;
 	var statearr = this.statearr;
 	var tinydata = this.tinydata;
-	var tinymark,utinymark, mark;
+	var tinymark, utinymark, mark;
 	var linewidthlong = this.linewidthlong;
 	var linewidthshort = this.linewidthshort;
 
@@ -168,9 +171,9 @@ Progressbar.prototype.giveClass = function($lable) {
 		}
 		if (!tinymark) {
 			utinymark = 0;
-			for (var j = 0 ; j < statearr.length ; j++) {
+			for (var j = 0; j < statearr.length; j++) {
 				if (statearr[j].state == course) {
-					for (var m = 1 ; m < tinyarr.length ; m++){
+					for (var m = 1; m < tinyarr.length; m++) {
 						if (tinyarr[m].indexnum < j) {
 							utinymark += tinyarr[m].tinystatecount;
 						}
@@ -179,7 +182,7 @@ Progressbar.prototype.giveClass = function($lable) {
 			}
 		}
 	}
-	
+
 	for (var i = 0; i < statearr.length; i++) {
 		if (course == statearr[i].state && i != statearr.length - 1) {
 			mark = i;
@@ -198,7 +201,7 @@ Progressbar.prototype.giveClass = function($lable) {
 				$node.toggleClass("bar-node-unknown bar-node-gray");
 			}
 		} else {
-			if ( mark == -1) {
+			if (mark == -1) {
 				$node.toggleClass("bar-node-unknown bar-node-blue");
 			} else if (index < mark) {
 				$node.toggleClass("bar-node-unknown bar-node-blue");
@@ -219,7 +222,7 @@ Progressbar.prototype.giveClass = function($lable) {
 				$slip.toggleClass("bar-slip-unknown bar-slip-gray");
 			}
 		} else {
-			if ( mark == -1) {
+			if (mark == -1) {
 				$slip.toggleClass("bar-slip-unknown bar-slip-blue");
 			} else if (index < mark) {
 				$slip.toggleClass("bar-slip-unknown bar-slip-blue");
@@ -257,9 +260,9 @@ Progressbar.prototype.giveClass = function($lable) {
 			}
 		}
 	})
-	$lable.find(".bar-slip-small-unknown").each(function(index){
+	$lable.find(".bar-slip-small-unknown").each(function(index) {
 		var $slip = $(this);
-		if (tinymark){
+		if (tinymark) {
 			var atinydata = tinyarr[tinymark];
 			var atinycount = atinydata.tinystatecount;
 			var findex = tinynum - atinycount;
@@ -272,14 +275,15 @@ Progressbar.prototype.giveClass = function($lable) {
 			} else {
 				$slip.toggleClass("bar-slip-small-unknown bar-slip-gray");
 			}
-		}else{
+		} else {
 			if (index < utinymark) {
 				$slip.toggleClass("bar-slip-small-unknown bar-slip-blue-small");
-			} /* else {
+			}
+			/* else {
 				$slip.toggleClass("bar-slip-small-unknown bar-slip-gray");
 			} */
 		}
-	}) 
+	})
 }
 /* 解析小进度条的各个指标（
 	title：是小进度条的整体名称。
