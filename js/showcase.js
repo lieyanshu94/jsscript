@@ -2,6 +2,6 @@ var Showcase = function(data) {
 	if (data) {
 	}
 }
-Progressbar.prototype.initData = function(data) {
+Showcase.prototype.initData = function(data) {
 	
 }
