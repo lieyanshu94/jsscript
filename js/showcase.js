@@ -1,8 +1,8 @@
 var Showcase = function(data,type) {
-	console.log(judgeString("王"));
-	console.log(judgeString("1"));
-	console.log(judgeString("2"));
-	console.log(judgeString(","));
+// 	console.log(judgeString("王"));
+// 	console.log(judgeString("1"));
+// 	console.log(judgeString("2"));
+// 	console.log(judgeString(","));
 	if (data) {
 		
 	}
@@ -18,8 +18,28 @@ Showcase.prototype.createInLable = function(obj) {
 	$obj.append(html);
 }
 Showcase.prototype.makehtml = function() {
+	var returnhtml = "";
 	var arrData = this.arrData;
-	var Farr = createArr();
+	var Farr = createArr();//解析了传过来的数据
+	
+	returnhtml += '<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body"><div class="left"><div class="list">';
+	for (var arr of Farr) {
+		var clazzname = arr.inclazz;
+		returnhtml += '<div>'+clazzname+'</div>';
+	}
+	returnhtml += '</div></div><div class="right"><div class="content">';
+	for (var arr of Farr) {
+		var clazzname = arr.inclazz;
+		returnhtml += '<div class="title"><div>'+clazzname+'</div></div>';
+		for (var Carr of arr.list) {
+			returnhtml += '<div class="text">';
+			for (var key in Carr) {
+				returnhtml += '<div name="'+key+'">'+Carr[key]+'</div>';
+			}
+			returnhtml += '</div>';
+		}
+	}
+	returnhtml += '</div></div></div></div></div>';
 	function createArr() {
 		var Farr = [];
 		for (var json of arrData) {
@@ -33,7 +53,7 @@ Showcase.prototype.makehtml = function() {
 				for (var i = 0 ; i < Farr.length ; i++) {
 					if (Farr[i].inclazz == inclazz) {
 						Farr[i].list.push(json);
-						listArr = Farr[i].list;
+						// listArr = Farr[i].list;
 						inflag = false;
 						break;
 					}
@@ -56,7 +76,7 @@ Showcase.prototype.makehtml = function() {
 		if (regnum.exec(value)) {
 			returnStr = "0~9";
 		} else if (regzh.exec(value)) {
-			returnStr = PinyinHelper.getShortPinyin(value);
+			returnStr = PinyinHelper.getShortPinyin(value).toUpperCase();
 		} else {
 			returnStr = "#";
 		}
