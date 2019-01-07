@@ -3,130 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/showcase.css"/>
 		<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/showcase.js" type="text/javascript" charset="utf-8"></script>
 	</head>
-	<style type="text/css">
-		* {
-			margin: 0;
-			padding: 0;
-		}
-
-		.shadetier {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #BFBFBF;
-			z-index: 1000;
-		}
-
-		.showcasebox {
-			position: relative;
-			top: 200px;
-			left: 400px;
-			background: #F5F5F5;
-			width: 500px;
-			height: 400px;
-			border-radius: 5px;
-			box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
-			display: -webkit-flex;
-			display: flex;
-			flex-direction: column;
-		}
-
-		.modal_header {
-			padding: 14px;
-		}
-
-		.modal_header:after {
-			clear: both;
-			content: '';
-			display: block;
-			width: 0;
-			height: 0;
-			visibility: hidden;
-		}
-
-		.modal_close {
-			display: inline-block;
-			float: right;
-			font-size: 21px;
-			font-weight: 700;
-			line-height: 1;
-			color: #000;
-			text-shadow: 0 1px 0 #fff;
-			filter: alpha(opacity=20);
-			opacity: .2;
-			cursor: pointer;
-		}
-
-		.modal_close:hover {
-			opacity: .5;
-
-		}
-
-		.modal_body {
-			display: flex;
-			display: -webkit-flex;
-			height: 80%;
-			padding: 14px;
-		}
-
-		.modal_body .left {
-			width: 20%;
-			height: 100%;
-			overflow-y: auto
-		}
-
-		.modal_body .right {
-			width: 80%;
-			height: 100%;
-			overflow-y: auto
-		}
-
-		.modal_body .left .list {}
-
-		.modal_body .right .content .title {
-			width: 60px;
-			margin: 4px 10px;
-			text-align: center;
-			height: 30px;
-			line-height: 30px;
-			font-size: 20px;
-			font-weight: 700;
-			border-bottom: 3px #5ace73 solid;
-		}
-
-		.modal_body .right .content .text {
-			display: flex;
-			display: -webkit-flex;
-		}
-
-		/*滚动条样式*/
-		.modal_body .right::-webkit-scrollbar {
-			/*滚动条整体样式*/
-			width: 4px;
-			/*高宽分别对应横竖滚动条的尺寸*/
-			height: 4px;
-		}
-
-		.modal_body .right::-webkit-scrollbar-thumb {
-			/*滚动条里面小方块*/
-			border-radius: 5px;
-			-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-			background: rgba(0, 0, 0, 0.2);
-		}
-
-		.modal_body .right::-webkit-scrollbar-track {
-			/*滚动条里面轨道*/
-			-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-			border-radius: 0;
-			background: rgba(0, 0, 0, 0.1);
-		}
-	</style>
-
 	<body>
 		<div class="shadetier">
 			<div class="showcasebox">
@@ -234,7 +114,8 @@
 	</body>
 	<script>
 		$(function() {
-
+			var showcase = new Showcase();
+			showcase.initData();
 		})
 	</script>
 </html>
