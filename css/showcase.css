@@ -78,7 +78,9 @@
 }
 
 .modal_body .left .list {}
-
+.modal_body .right .content{
+	flex-direction: column;
+}
 .modal_body .right .content .title {
 	width: 60px;
 	margin: 4px 10px;

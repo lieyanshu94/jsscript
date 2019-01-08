@@ -6,6 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="css/showcase.css"/>
 		<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/showcase.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/test.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<div class="shadetier">
@@ -17,6 +18,8 @@
 					<div class="left">
 						<div class="list">
 							<div>#</div>
+							<div>0~9</div>
+							<div>A</div>
 						</div>
 					</div>
 					<div class="right">
@@ -49,8 +52,38 @@
 								<div><input type="text" name="" /></div>
 								<div><input type="button" value="选择项目经理" onclick="select(this)" /></div>
 							</div>
+							<div class="text">
+								<div>项目名称</div>
+								<div><input type="text" name="" /></div>
+								<div><input type="button" value="选择项目经理" onclick="select(this)" /></div>
+							</div>
+							<div class="text">
+								<div>项目名称</div>
+								<div><input type="text" name="" /></div>
+								<div><input type="button" value="选择项目经理" onclick="select(this)" /></div>
+							</div>
+							<div class="text">
+								<div>项目名称</div>
+								<div><input type="text" name="" /></div>
+								<div><input type="button" value="选择项目经理" onclick="select(this)" /></div>
+							</div>
 							<div class="title">
 								<div>0~9</div>
+							</div>
+							<div class="text">
+								<div>项目名称</div>
+								<div><input type="text" name="" /></div>
+								<div><input type="button" value="选择项目经理" onclick="select(this)" /></div>
+							</div>
+							<div class="text">
+								<div>项目名称</div>
+								<div><input type="text" name="" /></div>
+								<div><input type="button" value="选择项目经理" onclick="select(this)" /></div>
+							</div>
+							<div class="text">
+								<div>项目名称</div>
+								<div><input type="text" name="" /></div>
+								<div><input type="button" value="选择项目经理" onclick="select(this)" /></div>
 							</div>
 							<div class="text">
 								<div>项目名称</div>
@@ -109,13 +142,43 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</body>
 	<script>
 		$(function() {
 			var showcase = new Showcase();
-			showcase.initData();
+			var farr = [];
+			var carr = [];
+			
+			for (var i = 0 ; i < 3 ; i++) {
+				var linedata = {
+					departid : "123",
+					departname : "大西瓜"+i
+				}
+				carr.push(linedata);
+			}
+			for (var arr of carr) {
+				var mainname = {
+					mainname : arr.departname ,
+					departid : arr.departid,
+					width : "10%"
+				}
+				var text = {
+					context:"<input type='text' name='text'/>",
+					width:"20%"
+				}
+				var button = {
+					context : "<button onclick='getpeople()'>选择工作人员</button>",
+					width : "20%"
+				}
+				var a = [];
+				a.push(mainname);
+				a.push(text);
+				a.push(button);
+				farr.push(a);
+			}
+			showcase.initData(farr);
+// 			showcase.createInLable($("body"));
 		})
 	</script>
 </html>

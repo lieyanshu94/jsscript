@@ -11,6 +11,7 @@ Showcase.prototype.initData = function(data) {
 	if (data instanceof Array) {
 		this.arrData = data;
 	}
+	this.makehtml();
 }
 Showcase.prototype.createInLable = function(obj) {
 	var $obj = $(obj);
@@ -22,49 +23,92 @@ Showcase.prototype.makehtml = function() {
 	var arrData = this.arrData;
 	var Farr = createArr();//解析了传过来的数据
 	
-	returnhtml += '<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body"><div class="left"><div class="list">';
-	for (var arr of Farr) {
-		var clazzname = arr.inclazz;
-		returnhtml += '<div>'+clazzname+'</div>';
-	}
-	returnhtml += '</div></div><div class="right"><div class="content">';
-	for (var arr of Farr) {
-		var clazzname = arr.inclazz;
-		returnhtml += '<div class="title"><div>'+clazzname+'</div></div>';
-		for (var Carr of arr.list) {
-			returnhtml += '<div class="text">';
-			for (var key in Carr) {
-				returnhtml += '<div name="'+key+'">'+Carr[key]+'</div>';
-			}
-			returnhtml += '</div>';
+	returnhtml += '<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body">';
+	if (Farr[0].inclazz) {
+		returnhtml += '<div class="left"><div class="list">';
+		for (var arr of Farr) {
+			var clazzname = arr.inclazz;
+			returnhtml += '<div>'+clazzname+'</div>';
 		}
+		returnhtml += '</div></div><div class="right"><div class="content">';
+		for (var arr of Farr) {
+			var clazzname = arr.inclazz;
+			returnhtml += '<div class="title"><div>'+clazzname+'</div></div>';
+			for (var Carr of arr.list) {
+				returnhtml += '<div class="text">';
+				for (var json of Carr) {
+					returnhtml += makediv(json);
+				}
+				returnhtml += '</div>';
+			}
+		}
+		returnhtml += '</div></div></div></div></div>';
+	} else {
+		returnhtml += '<div class="right" style="width:100%"><div class="content">';
+		for (var arr of Farr) {
+			for (var Carr of arr) {
+				returnhtml += '<div class="text">';
+				for (var json of Carr) {
+					returnhtml += makediv(json);
+				}
+				returnhtml += '</div>';
+			}
+		}
+		returnhtml += '</div></div></div></div></div>';
 	}
-	returnhtml += '</div></div></div></div></div>';
+	function makediv(json){
+		var divhtml = "";
+		if(json.mainname){
+			divhtml += '<div name="mainname" data-departid="'+json.departid+'" sytle="width:'+json.width+'">'+json.mainname+'</div>';
+		}else{
+			divhtml += '<div sytle="width:'+json.width+'">'+json.context+'</div>';
+		}
+		return divhtml;
+	}
 	function createArr() {
 		var Farr = [];
-		for (var json of arrData) {
-			var mainname = json.mainname;
+		for (var linearr of arrData) {
+			var mainname;
+			for (var brokarr of linearr) {
+				if (brokarr.mainname) {
+					mainname = brokarr.mainname;
+					break;
+				}
+			}
 			if (mainname) {
 				var inflag = true;
 				var listArr = [];
-				var Fvalue = mainname.charAt(1);//获得第一个字符
+				var Fvalue = mainname.charAt(0);//获得第一个字符
 				var inclazz = judgeString(Fvalue);
-				listArr.push(json);
 				for (var i = 0 ; i < Farr.length ; i++) {
 					if (Farr[i].inclazz == inclazz) {
-						Farr[i].list.push(json);
-						// listArr = Farr[i].list;
+						Farr[i].list.push(linearr);
 						inflag = false;
 						break;
 					}
 				}
 				if (inflag) {
 					var Fdata = {};
-					Fdata.inclass = inclazz;
+					Fdata.inclazz = inclazz;
+					listArr.push(linearr);
 					Fdata.list = listArr;
-					Farr.push(Fdata);
+					var flag = true;
+					//在这里要做一个排序
+					for (var i = 0 ;i < Farr.length ; i++) {
+						var arr = Farr[i];
+						if (inclazz < arr.inclazz) {
+							Farr.splice(i,0,Fdata);
+							flag = false;
+							break;
+						}
+					}
+					if (flag) {
+						Farr.push(Fdata);
+					}
 				}
 				
+			} else {
+				Farr = arrData;
 			}
 		}
 		return Farr;
@@ -76,12 +120,13 @@ Showcase.prototype.makehtml = function() {
 		if (regnum.exec(value)) {
 			returnStr = "0~9";
 		} else if (regzh.exec(value)) {
-			returnStr = PinyinHelper.getShortPinyin(value).toUpperCase();
+			returnStr = "字母"+PinyinHelper.getShortPinyin(value).toUpperCase();
 		} else {
 			returnStr = "#";
 		}
 		return returnStr;
 	}
+	return returnhtml;
 }
 
 ;! function(n) {
