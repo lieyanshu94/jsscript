@@ -1,11 +1,4 @@
 var Showcase = function(data,type) {
-// 	console.log(judgeString("王"));
-// 	console.log(judgeString("1"));
-// 	console.log(judgeString("2"));
-// 	console.log(judgeString(","));
-	if (data) {
-		
-	}
 }
 Showcase.prototype.initData = function(data) {
 	if (data instanceof Array) {
@@ -13,10 +6,11 @@ Showcase.prototype.initData = function(data) {
 	}
 	this.makehtml();
 }
-Showcase.prototype.createInLable = function(obj) {
-	var $obj = $(obj);
+Showcase.prototype.createInLable = function() {
 	var html = this.makehtml();
-	$obj.append(html);
+	$("body").append(html);
+	this.initLeftClick();
+	this.elementEvent();
 }
 Showcase.prototype.makehtml = function() {
 	var returnhtml = "";
@@ -42,7 +36,6 @@ Showcase.prototype.makehtml = function() {
 				returnhtml += '</div>';
 			}
 		}
-		returnhtml += '</div></div></div></div></div>';
 	} else {
 		returnhtml += '<div class="right" style="width:100%"><div class="content">';
 		for (var arr of Farr) {
@@ -54,14 +47,18 @@ Showcase.prototype.makehtml = function() {
 				returnhtml += '</div>';
 			}
 		}
-		returnhtml += '</div></div></div></div></div>';
 	}
+	returnhtml +=   '</div></div></div>'+
+					'<div class="modal_buttonbox">'+
+						'<input class="t_button" type="button" data-btn="confirm" value="确定"/>'+
+						'<input class="t_button" type="button" data-btn="cancel" value="取消"/>'+
+					'</div></div></div>';
 	function makediv(json){
 		var divhtml = "";
 		if(json.mainname){
-			divhtml += '<div name="mainname" data-departid="'+json.departid+'" sytle="width:'+json.width+'">'+json.mainname+'</div>';
+			divhtml += '<div name="mainname" data-departid="'+json.departid+'" style="width:'+json.width+'">'+json.mainname+'</div>';
 		}else{
-			divhtml += '<div sytle="width:'+json.width+'">'+json.context+'</div>';
+			divhtml += '<div style="width:'+json.width+'">'+json.context+'</div>';
 		}
 		return divhtml;
 	}
@@ -128,7 +125,36 @@ Showcase.prototype.makehtml = function() {
 	}
 	return returnhtml;
 }
-
+Showcase.prototype.initLeftClick = function(){
+	$(".modal_body .left .list div").bind("click",function(){
+		var $div = $(this);
+		var dival = $div.text();
+		var $right = $(".right");
+		var $content = $right.find(".content");
+		$(".modal_body").find(".title").each(function(index){
+			var $title = $(this);
+			var titval = $title.find("div").text();
+			if (dival == titval) {
+				$right.animate({scrollTop:($title.offset().top-$content.offset().top)},800);
+			}
+		});
+	})
+}
+Showcase.prototype.elementEvent = function() {
+	$(".showcasebox").find("input[type=button]").each(function(index){
+		var $btn = $(this);
+		$btn.bind("click",function(){
+			var btnname = $btn.data("btn");
+			if(btnname){
+				if(btnname == "comfile") {
+					
+				}else if (btnname == "cancel") {
+					
+				}
+			}
+		})
+	})
+}
 ;! function(n) {
 	function g(h) {
 		if (i[h])

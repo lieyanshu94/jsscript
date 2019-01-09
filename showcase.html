@@ -141,6 +141,10 @@
 						</div>
 					</div>
 				</div>
+				<div class="modal_buttonbox">
+					<input class="t_button" type="button" value="确定" onclick="select(this)" />
+					<input class="t_button" type="button" value="取消" onclick="select(this)" />
+				</div>
 			</div>
 		</div>
 	</body>
@@ -161,15 +165,15 @@
 				var mainname = {
 					mainname : arr.departname ,
 					departid : arr.departid,
-					width : "10%"
+					width : "30%"
 				}
 				var text = {
-					context:"<input type='text' name='text'/>",
-					width:"20%"
+					context:"<input type='text' name='text' readonly/>",
+					width:"40%"
 				}
 				var button = {
-					context : "<button onclick='getpeople()'>选择工作人员</button>",
-					width : "20%"
+					context : "<input type='button' onclick='getpeople()' value='选择工作人员'/>",
+					width : "30%"
 				}
 				var a = [];
 				a.push(mainname);
@@ -178,7 +182,7 @@
 				farr.push(a);
 			}
 			showcase.initData(farr);
-// 			showcase.createInLable($("body"));
+			showcase.createInLable();
 		})
 	</script>
 </html>
