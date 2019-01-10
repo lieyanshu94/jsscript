@@ -1,24 +1,57 @@
-var Showcase = function(data,type) {
+var Showcase = function(data) {
+	this.type = "alert";
+	this.arrData = [];
+	this.context = "";
+	this.createnow = true;
+	if(data instanceof Object) {
+		if (data.type) {
+			this.type = data.type;
+		}
+		if (data.data) {
+			this.arrData = data.data;
+		}
+		if (data.createnow) {
+			this.createnow = data.createnow;
+		}
+		if (data.callBack) {
+			this.callBack = data.callBack;
+		}
+	} else if (data instanceof String) {
+		this.context = data;
+	} else if (!data) {
+		this.createnow = false;
+	}
+	if (this.createnow) {
+		this.createInLable();
+	}
+};
+Showcase.prototype.callBack = function() {
+	
 }
+Showcase.prototype.initType = function(type) {
+	this.type = type;
+};
 Showcase.prototype.initData = function(data) {
 	if (data instanceof Array) {
 		this.arrData = data;
 	}
 	this.makehtml();
-}
+};
 Showcase.prototype.createInLable = function() {
 	var html = this.makehtml();
 	$("body").append(html);
 	this.initLeftClick();
 	this.elementEvent();
-}
+};
 Showcase.prototype.makehtml = function() {
 	var returnhtml = "";
 	var arrData = this.arrData;
+	var context = this.context;
 	var Farr = createArr();//解析了传过来的数据
+	var type = this.type;
 	
 	returnhtml += '<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body">';
-	if (Farr[0].inclazz) {
+	if (Farr[0] && Farr[0].inclazz) {
 		returnhtml += '<div class="left"><div class="list">';
 		for (var arr of Farr) {
 			var clazzname = arr.inclazz;
@@ -55,6 +88,11 @@ Showcase.prototype.makehtml = function() {
 					'</div></div></div>';
 	function makediv(json){
 		var divhtml = "";
+		if (type == "checkbox") {
+			divhtml += '<div name="checkbox"><input type="checkbox" /></div>';
+		} else if (type == "radio") {
+			divhtml += '<div name="radio"><input type="radio" name="s_radio" /></div>';
+		}
 		if(json.mainname){
 			divhtml += '<div name="mainname" data-departid="'+json.departid+'" style="width:'+json.width+'">'+json.mainname+'</div>';
 		}else{
@@ -124,7 +162,7 @@ Showcase.prototype.makehtml = function() {
 		return returnStr;
 	}
 	return returnhtml;
-}
+};
 Showcase.prototype.initLeftClick = function(){
 	$(".modal_body .left .list div").bind("click",function(){
 		var $div = $(this);
@@ -139,22 +177,28 @@ Showcase.prototype.initLeftClick = function(){
 			}
 		});
 	})
-}
+};
 Showcase.prototype.elementEvent = function() {
+	var show = this;
 	$(".showcasebox").find("input[type=button]").each(function(index){
 		var $btn = $(this);
 		$btn.bind("click",function(){
 			var btnname = $btn.data("btn");
 			if(btnname){
-				if(btnname == "comfile") {
-					
+				if(btnname == "confirm") {
+					show.callBack();
+					$(".shadetier").remove();
 				}else if (btnname == "cancel") {
-					
+					$(".shadetier").remove();
 				}
 			}
 		})
 	})
-}
+	$(".showcasebox").find(".modal_close").bind("click",function(){
+		$(".shadetier").remove();
+	})
+	
+};
 ;! function(n) {
 	function g(h) {
 		if (i[h])

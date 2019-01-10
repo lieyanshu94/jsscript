@@ -150,7 +150,12 @@
 	</body>
 	<script>
 		$(function() {
-			var showcase = new Showcase();
+			var showcase = new Showcase({
+				createnow:false,
+				callBack:function(){
+					alert("aa");
+				}
+			});
 			var farr = [];
 			var carr = [];
 			
