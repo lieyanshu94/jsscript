@@ -51,6 +51,7 @@ Showcase.prototype.makehtml = function() {
 	var type = this.type;
 	
 	returnhtml += '<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body">';
+	
 	if (Farr[0] && Farr[0].inclazz) {
 		returnhtml += '<div class="left"><div class="list">';
 		for (var arr of Farr) {
@@ -61,6 +62,9 @@ Showcase.prototype.makehtml = function() {
 		for (var arr of Farr) {
 			var clazzname = arr.inclazz;
 			returnhtml += '<div class="title"><div>'+clazzname+'</div></div>';
+			if (type == "checkbox" || type == "radio"){
+				returnhtml += makeclickbox();
+			}
 			for (var Carr of arr.list) {
 				returnhtml += '<div class="text">';
 				for (var json of Carr) {
@@ -74,6 +78,9 @@ Showcase.prototype.makehtml = function() {
 		for (var arr of Farr) {
 			for (var Carr of arr) {
 				returnhtml += '<div class="text">';
+				if (type == "checkbox" || type == "radio"){
+					returnhtml += makeclickbox();
+				}
 				for (var json of Carr) {
 					returnhtml += makediv(json);
 				}
@@ -86,13 +93,17 @@ Showcase.prototype.makehtml = function() {
 						'<input class="t_button" type="button" data-btn="confirm" value="确定"/>'+
 						'<input class="t_button" type="button" data-btn="cancel" value="取消"/>'+
 					'</div></div></div>';
-	function makediv(json){
+	function makeclickbox(){
 		var divhtml = "";
 		if (type == "checkbox") {
 			divhtml += '<div name="checkbox"><input type="checkbox" /></div>';
 		} else if (type == "radio") {
 			divhtml += '<div name="radio"><input type="radio" name="s_radio" /></div>';
 		}
+		return divhtml;
+	}
+	function makediv(json){
+		var divhtml = "";
 		if(json.mainname){
 			divhtml += '<div name="mainname" data-departid="'+json.departid+'" style="width:'+json.width+'">'+json.mainname+'</div>';
 		}else{
