@@ -62,11 +62,11 @@ Showcase.prototype.makehtml = function() {
 		for (var arr of Farr) {
 			var clazzname = arr.inclazz;
 			returnhtml += '<div class="title"><div>'+clazzname+'</div></div>';
-			if (type == "checkbox" || type == "radio"){
-				returnhtml += makeclickbox();
-			}
 			for (var Carr of arr.list) {
 				returnhtml += '<div class="text">';
+				if (type == "checkbox" || type == "radio"){
+					returnhtml += makeclickbox();
+				}
 				for (var json of Carr) {
 					returnhtml += makediv(json);
 				}
