@@ -162,7 +162,7 @@
 			
 			for (var i = 0 ; i < 3 ; i++) {
 				var linedata = {
-					departid : "123",
+					departid : "123"+i,
 					departname : "大西瓜"+i
 				}
 				carr.push(linedata);
@@ -170,7 +170,6 @@
 			for (var arr of carr) {
 				var mainname = {
 					mainname : arr.departname ,
-					departid : arr.departid,
 					width : "30%"
 				}
 				var text = {
@@ -181,10 +180,14 @@
 					context : "<input type='button' onclick='getpeople()' value='选择工作人员'/>",
 					width : "30%"
 				}
+				var id = {
+					id:arr.departid
+				}
 				var a = [];
 				a.push(mainname);
 				a.push(text);
 				a.push(button);
+				a.push(id);
 				farr.push(a);
 			}
 			showcase.initData(farr);

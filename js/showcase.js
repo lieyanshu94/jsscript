@@ -3,7 +3,7 @@ var Showcase = function(data) {
 	this.arrData = [];
 	this.context = "";
 	this.createnow = true;
-	if(data instanceof Object) {
+	if (data instanceof Object) {
 		if (data.type) {
 			this.type = data.type;
 		}
@@ -26,7 +26,33 @@ var Showcase = function(data) {
 	}
 };
 Showcase.prototype.callBack = function() {
-	
+	var returnarr = [];
+	var type = this.type;
+	$(".modal_body .right").find(".text").each(function(index) {
+		var $text = $(this);
+		var dataid;
+		$text.find("div").each(function(index) {
+			var jsondata = {};
+			var $div = $(this);
+			var $input = $div.find("input");
+			if (index==0&&type=="checkbox"||type=="radio"){
+				dataid = $div.find("input").data("id");
+			}
+			if ($div.attr("name") == "mainname") {
+				if (type!="checkbox"&&type!="radio"){
+					dataid = $div.data("id");
+				}
+				jsondata.mainname = $div.text();
+			}
+			if ($input) {
+				jsondata[$input.attr("name")] = $input.val();
+			}
+		})
+		if(dataid) {
+			jsondata.id = dataid;
+		}
+
+	})
 }
 Showcase.prototype.initType = function(type) {
 	this.type = type;
@@ -47,28 +73,37 @@ Showcase.prototype.makehtml = function() {
 	var returnhtml = "";
 	var arrData = this.arrData;
 	var context = this.context;
-	var Farr = createArr();//解析了传过来的数据
+	var Farr = createArr(); //解析了传过来的数据
 	var type = this.type;
-	
-	returnhtml += '<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body">';
-	
+	var dataid;
+	returnhtml +=
+		'<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body">';
+
 	if (Farr[0] && Farr[0].inclazz) {
 		returnhtml += '<div class="left"><div class="list">';
 		for (var arr of Farr) {
 			var clazzname = arr.inclazz;
-			returnhtml += '<div>'+clazzname+'</div>';
+			returnhtml += '<div>' + clazzname + '</div>';
 		}
 		returnhtml += '</div></div><div class="right"><div class="content">';
 		for (var arr of Farr) {
 			var clazzname = arr.inclazz;
-			returnhtml += '<div class="title"><div>'+clazzname+'</div></div>';
+			returnhtml += '<div class="title"><div>' + clazzname + '</div></div>';
 			for (var Carr of arr.list) {
 				returnhtml += '<div class="text">';
-				if (type == "checkbox" || type == "radio"){
-					returnhtml += makeclickbox();
+				for (var json of Carr) {
+					if (json.id) {
+						dataid = json.id;
+						break;
+					}
+				}
+				if (type == "checkbox" || type == "radio") {
+					returnhtml += makeclickbox(dataid);
 				}
 				for (var json of Carr) {
-					returnhtml += makediv(json);
+					if (!json.id) {
+						returnhtml += makediv(json);
+					}
 				}
 				returnhtml += '</div>';
 			}
@@ -78,39 +113,62 @@ Showcase.prototype.makehtml = function() {
 		for (var arr of Farr) {
 			for (var Carr of arr) {
 				returnhtml += '<div class="text">';
-				if (type == "checkbox" || type == "radio"){
-					returnhtml += makeclickbox();
+				for (var json of Carr) {
+					if (json.id) {
+						dataid = json.id;
+						break;
+					}
+				}
+				if (type == "checkbox" || type == "radio") {
+					returnhtml += makeclickbox(dataid);
 				}
 				for (var json of Carr) {
-					returnhtml += makediv(json);
+					if (!json.id) {
+						returnhtml += makediv(json);
+					}
 				}
 				returnhtml += '</div>';
 			}
 		}
 	}
-	returnhtml +=   '</div></div></div>'+
-					'<div class="modal_buttonbox">'+
-						'<input class="t_button" type="button" data-btn="confirm" value="确定"/>'+
-						'<input class="t_button" type="button" data-btn="cancel" value="取消"/>'+
-					'</div></div></div>';
-	function makeclickbox(){
+	returnhtml += '</div></div></div>' +
+		'<div class="modal_buttonbox">' +
+		'<input class="t_button" type="button" data-btn="confirm" value="确定"/>' +
+		'<input class="t_button" type="button" data-btn="cancel" value="取消"/>' +
+		'</div></div></div>';
+
+	function makeclickbox(id) {
 		var divhtml = "";
 		if (type == "checkbox") {
-			divhtml += '<div name="checkbox"><input type="checkbox" /></div>';
+			divhtml += '<div name="checkbox"><input type="checkbox"';
+			if (id) {
+				divhtml += ' data-id="' + id + '"';
+			}
+			divhtml += ' /></div>';
 		} else if (type == "radio") {
-			divhtml += '<div name="radio"><input type="radio" name="s_radio" /></div>';
+			divhtml += '<div name="radio"><input type="radio" name="s_radio"';
+			if (id) {
+				divhtml += ' data-id="' + id + '"';
+			}
+			divhtml += ' /></div>';;
 		}
 		return divhtml;
 	}
-	function makediv(json){
+
+	function makediv(json) {
 		var divhtml = "";
-		if(json.mainname){
-			divhtml += '<div name="mainname" data-departid="'+json.departid+'" style="width:'+json.width+'">'+json.mainname+'</div>';
-		}else{
-			divhtml += '<div style="width:'+json.width+'">'+json.context+'</div>';
+		if (json.mainname) {
+			divhtml += '<div name="mainname" style="width:' + json.width + '"';
+			if (dataid && (type != "checkbox" && type != "radio")) {
+				divhtml += ' data-id="' + dataid + '"';
+			}
+			divhtml += '>' + json.mainname + '</div>';
+		} else {
+			divhtml += '<div style="width:' + json.width + '">' + json.context + '</div>';
 		}
 		return divhtml;
 	}
+
 	function createArr() {
 		var Farr = [];
 		for (var linearr of arrData) {
@@ -124,9 +182,9 @@ Showcase.prototype.makehtml = function() {
 			if (mainname) {
 				var inflag = true;
 				var listArr = [];
-				var Fvalue = mainname.charAt(0);//获得第一个字符
+				var Fvalue = mainname.charAt(0); //获得第一个字符
 				var inclazz = judgeString(Fvalue);
-				for (var i = 0 ; i < Farr.length ; i++) {
+				for (var i = 0; i < Farr.length; i++) {
 					if (Farr[i].inclazz == inclazz) {
 						Farr[i].list.push(linearr);
 						inflag = false;
@@ -140,10 +198,10 @@ Showcase.prototype.makehtml = function() {
 					Fdata.list = listArr;
 					var flag = true;
 					//在这里要做一个排序
-					for (var i = 0 ;i < Farr.length ; i++) {
+					for (var i = 0; i < Farr.length; i++) {
 						var arr = Farr[i];
 						if (inclazz < arr.inclazz) {
-							Farr.splice(i,0,Fdata);
+							Farr.splice(i, 0, Fdata);
 							flag = false;
 							break;
 						}
@@ -152,21 +210,22 @@ Showcase.prototype.makehtml = function() {
 						Farr.push(Fdata);
 					}
 				}
-				
+
 			} else {
 				Farr = arrData;
 			}
 		}
 		return Farr;
 	}
-	function judgeString(value){
+
+	function judgeString(value) {
 		var returnStr = "";
 		var regzh = /[\u4e00-\u9fa5]/;
 		var regnum = /\d/;
 		if (regnum.exec(value)) {
 			returnStr = "0~9";
 		} else if (regzh.exec(value)) {
-			returnStr = "字母"+PinyinHelper.getShortPinyin(value).toUpperCase();
+			returnStr = "字母" + PinyinHelper.getShortPinyin(value).toUpperCase();
 		} else {
 			returnStr = "#";
 		}
@@ -174,43 +233,45 @@ Showcase.prototype.makehtml = function() {
 	}
 	return returnhtml;
 };
-Showcase.prototype.initLeftClick = function(){
-	$(".modal_body .left .list div").bind("click",function(){
+Showcase.prototype.initLeftClick = function() {
+	$(".modal_body .left .list div").bind("click", function() {
 		var $div = $(this);
 		var dival = $div.text();
 		var $right = $(".right");
 		var $content = $right.find(".content");
-		$(".modal_body").find(".title").each(function(index){
+		$(".modal_body").find(".title").each(function(index) {
 			var $title = $(this);
 			var titval = $title.find("div").text();
 			if (dival == titval) {
-				$right.animate({scrollTop:($title.offset().top-$content.offset().top)},800);
+				$right.animate({
+					scrollTop: ($title.offset().top - $content.offset().top)
+				}, 800);
 			}
 		});
 	})
 };
 Showcase.prototype.elementEvent = function() {
 	var show = this;
-	$(".showcasebox").find("input[type=button]").each(function(index){
+	$(".showcasebox").find("input[type=button]").each(function(index) {
 		var $btn = $(this);
-		$btn.bind("click",function(){
+		$btn.bind("click", function() {
 			var btnname = $btn.data("btn");
-			if(btnname){
-				if(btnname == "confirm") {
+			if (btnname) {
+				if (btnname == "confirm") {
 					show.callBack();
 					$(".shadetier").remove();
-				}else if (btnname == "cancel") {
+				} else if (btnname == "cancel") {
 					$(".shadetier").remove();
 				}
 			}
 		})
 	})
-	$(".showcasebox").find(".modal_close").bind("click",function(){
+	$(".showcasebox").find(".modal_close").bind("click", function() {
 		$(".shadetier").remove();
 	})
-	
-};
-;! function(n) {
+
+};;
+! function(n) {
 	function g(h) {
 		if (i[h])
 			return i[h].exports;
