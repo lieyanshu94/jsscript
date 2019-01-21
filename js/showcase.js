@@ -4,16 +4,16 @@ var Showcase = function(data) {
 	this.context = "";
 	this.createnow = true;
 	if (data instanceof Object) {
-		if (data.type) {
+		if (data.type!=undefined) {
 			this.type = data.type;
 		}
-		if (data.data) {
+		if (data.data!=undefined) {
 			this.arrData = data.data;
 		}
-		if (data.createnow) {
+		if (data.createnow!=undefined) {
 			this.createnow = data.createnow;
 		}
-		if (data.callBack) {
+		if (data.callBack!=undefined) {
 			this.callBack = data.callBack;
 		}
 	} else if (data instanceof String) {
@@ -28,31 +28,57 @@ var Showcase = function(data) {
 Showcase.prototype.callBack = function() {
 	var returnarr = [];
 	var type = this.type;
-	$(".modal_body .right").find(".text").each(function(index) {
-		var $text = $(this);
-		var dataid;
-		$text.find("div").each(function(index) {
+	if (type=="checkbox"||type=="radio") {
+		$(".modal_body .right").find(".text").each(function(index) {
+			var $text = $(this);
 			var jsondata = {};
-			var $div = $(this);
-			var $input = $div.find("input");
-			if (index==0&&type=="checkbox"||type=="radio"){
-				dataid = $div.find("input").data("id");
+			var dataid;
+			if (type=="checkbox"&&!$text.find("input[type=checkbox]").prop("checked")|| type=="radio"&&!$text.find("input[type=radio]").prop("checked")) {
+				return;
 			}
-			if ($div.attr("name") == "mainname") {
-				if (type!="checkbox"&&type!="radio"){
-					dataid = $div.data("id");
+			$text.find("div").each(function(index) {
+				var $div = $(this);
+				var $input = $div.find("input");
+				if (index==0){
+					dataid = $div.find("input").data("id");
 				}
-				jsondata.mainname = $div.text();
-			}
-			if ($input) {
-				jsondata[$input.attr("name")] = $input.val();
-			}
+				if ($div.attr("name") == "mainname") {
+					jsondata.mainname = $div.text();
+				}
+				if ($input) {
+					jsondata[$input.attr("name")] = $input.val();
+				}
+				if(dataid) {
+					jsondata.id = dataid;
+				}
+			})
+			returnarr.push(jsondata);
 		})
-		if(dataid) {
-			jsondata.id = dataid;
-		}
-
-	})
+	} else if (type == "table") {
+		$(".modal_body .right").find(".text").each(function(index) {
+			var $text = $(this);
+			var dataid;
+			var jsondata = {};
+			$text.find("div").each(function(index) {
+				var $div = $(this);
+				var $input = $div.find("input");
+				if (index==0){
+					dataid = $div.find("input").data("id");
+				}
+				if ($div.attr("name") == "mainname") {
+					jsondata.mainname = $div.text();
+				}
+				if ($input.attr("name")) {
+					jsondata[$input.attr("name")] = $input.val();
+				}
+			})
+			if(dataid) {
+				jsondata.id = dataid;
+			}
+			returnarr.push(jsondata);
+		})
+	}
+	console.log(returnarr);
 }
 Showcase.prototype.initType = function(type) {
 	this.type = type;
@@ -61,7 +87,6 @@ Showcase.prototype.initData = function(data) {
 	if (data instanceof Array) {
 		this.arrData = data;
 	}
-	this.makehtml();
 };
 Showcase.prototype.createInLable = function() {
 	var html = this.makehtml();
@@ -78,7 +103,6 @@ Showcase.prototype.makehtml = function() {
 	var dataid;
 	returnhtml +=
 		'<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body">';
-
 	if (Farr[0] && Farr[0].inclazz) {
 		returnhtml += '<div class="left"><div class="list">';
 		for (var arr of Farr) {
@@ -258,8 +282,10 @@ Showcase.prototype.elementEvent = function() {
 			var btnname = $btn.data("btn");
 			if (btnname) {
 				if (btnname == "confirm") {
-					show.callBack();
-					$(".shadetier").remove();
+					var flag = show.callBack();
+					if(flag){
+						$(".shadetier").remove();
+					}
 				} else if (btnname == "cancel") {
 					$(".shadetier").remove();
 				}

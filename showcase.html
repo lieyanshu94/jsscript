@@ -9,7 +9,7 @@
 		<script src="js/test.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
-		<div class="shadetier">
+		<!-- <div class="shadetier">
 			<div class="showcasebox">
 				<div class="modal_header">
 					<span class="modal_close">x</span>
@@ -146,16 +146,13 @@
 					<input class="t_button" type="button" value="取消" onclick="select(this)" />
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</body>
 	<script>
 		$(function() {
 			var showcase = new Showcase({
 				type:"checkbox",
-				createnow:false,
-				callBack:function(){
-					alert("aa");
-				}
+				createnow:false
 			});
 			var farr = [];
 			var carr = [];
@@ -190,8 +187,8 @@
 				a.push(id);
 				farr.push(a);
 			}
-			showcase.initData(farr);
-			showcase.createInLable();
+			// showcase.initData(farr);
+			// showcase.createInLable();
 		})
 	</script>
 </html>
