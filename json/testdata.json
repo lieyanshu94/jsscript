@@ -1,0 +1,38 @@
+[
+	[{
+		"mainname": "大西瓜0",
+		"width": "30%"
+	}, {
+		"context": "<input type='text' name='text' readonly/>",
+		"width": "40%"
+	}, {
+		"context": "<input type='button' onclick='getpeople()' value='选择工作人员'/>",
+		"width": "30%"
+	}, {
+		"id": "1230"
+	}],
+	[{
+		"mainname": "大西瓜1",
+		"width": "30%"
+	}, {
+		"context": "<input type='text' name='text' readonly/>",
+		"width": "40%"
+	}, {
+		"context": "<input type='button' onclick='getpeople()' value='选择工作人员'/>",
+		"width": "30%"
+	}, {
+		"id": "1231"
+	}],
+	[{
+		"mainname": "大西瓜2",
+		"width": "30%"
+	}, {
+		"context": "<input type='text' name='text' readonly/>",
+		"width": "40%"
+	}, {
+		"context": "<input type='button' onclick='getpeople()' value='选择工作人员'/>",
+		"width": "30%"
+	}, {
+		"id": "1232"
+	}]
+]

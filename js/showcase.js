@@ -1,302 +1,371 @@
-var Showcase = function(data) {
-	this.type = "alert";
-	this.arrData = [];
-	this.context = "";
-	this.createnow = true;
-	if (data instanceof Object) {
-		if (data.type!=undefined) {
-			this.type = data.type;
-		}
-		if (data.data!=undefined) {
-			this.arrData = data.data;
-		}
-		if (data.createnow!=undefined) {
-			this.createnow = data.createnow;
-		}
-		if (data.callBack!=undefined) {
-			this.callBack = data.callBack;
-		}
-	} else if (data instanceof String) {
-		this.context = data;
-	} else if (!data) {
-		this.createnow = false;
-	}
-	if (this.createnow) {
-		this.createInLable();
-	}
-};
-Showcase.prototype.callBack = function() {
-	var returnarr = [];
-	var type = this.type;
-	if (type=="checkbox"||type=="radio") {
-		$(".modal_body .right").find(".text").each(function(index) {
-			var $text = $(this);
-			var jsondata = {};
-			var dataid;
-			if (type=="checkbox"&&!$text.find("input[type=checkbox]").prop("checked")|| type=="radio"&&!$text.find("input[type=radio]").prop("checked")) {
-				return;
+! function(win, dom, undefined) {
+	var Showcase = function(data) {
+		this.type = "alert";
+		this.arrData = [];
+		this.context = "";
+		this.createnow = true;
+		this.close = true;
+		this.redata = "";
+		if (data instanceof Object) {
+			if (data.type != undefined) {
+				this.type = data.type;
 			}
-			$text.find("div").each(function(index) {
+			if (data.data != undefined) {
+				this.arrData = data.data;
+			}
+			if (data.createnow != undefined) {
+				this.createnow = data.createnow;
+			}
+			if (data.callBack != undefined) {
+				this.callBack = data.callBack;
+			}
+			if (data.clickconfirm != undefined) {
+				this.clickconfirm = data.clickconfirm;
+			}
+			if (data.cancelBack != undefined) {
+				this.cancelBack = data.cancelBack;
+			}
+			if (data.close != undefined) {
+				this.close = data.close;
+			}
+		} else if (data instanceof String) {
+			this.context = data;
+		} else if (!data) {
+			this.createnow = false;
+		}
+		if (this.createnow) {
+			this.createInLable();
+		}
+	};
+	//一些默认的返回方法
+	Showcase.prototype.callBack = function() {
+		var returnarr;
+		var type = this.type;
+		if (type == "checkbox") {
+			$(".modal_body .right").find(".text").each(function(index) {
+				var $text = $(this);
+				var jsondata = {};
+				returnarr = [];
+				var dataid;
+				if (type == "checkbox" && !$text.find("input[type=checkbox]").prop("checked")) {
+					return;
+				}
+				$text.find("div").each(function(index) {
+					var $div = $(this);
+					var $input = $div.find("input");
+					if (index == 0) {
+						dataid = $div.find("input").data("id");
+					}
+					if ($div.attr("name") == "mainname") {
+						jsondata.mainname = $div.text();
+					}
+					if ($input.length != 0) {
+						jsondata[$input.attr("name")] = $input.val();
+					}
+					if (dataid) {
+						jsondata.id = dataid;
+					}
+				})
+				returnarr.push(jsondata);
+			})
+		} else if (type == "radio") {
+			var jsondata = {};
+			var $radio = $(".modal_body .right").find(".text input[type=radio]:checked");
+			var dataid = $radio.data("id");
+			jsondata.id = dataid;
+			$radio.parent().siblings().each(function(index) {
 				var $div = $(this);
 				var $input = $div.find("input");
-				if (index==0){
-					dataid = $div.find("input").data("id");
-				}
 				if ($div.attr("name") == "mainname") {
 					jsondata.mainname = $div.text();
 				}
-				if ($input) {
+				if ($input.length != 0) {
 					jsondata[$input.attr("name")] = $input.val();
 				}
-				if(dataid) {
+			})
+			returnarr = jsondata;
+
+		} else if (type == "table") {
+			$(".modal_body .right").find(".text").each(function(index) {
+				var $text = $(this);
+				var dataid;
+				var jsondata = {};
+				$text.find("div").each(function(index) {
+					var $div = $(this);
+					var $input = $div.find("input");
+					if (index == 0) {
+						dataid = $div.find("input").data("id");
+					}
+					if ($div.attr("name") == "mainname") {
+						jsondata.mainname = $div.text();
+					}
+					if ($input.attr("name")) {
+						jsondata[$input.attr("name")] = $input.val();
+					}
+				})
+				if (dataid) {
 					jsondata.id = dataid;
 				}
+				returnarr.push(jsondata);
 			})
-			returnarr.push(jsondata);
-		})
-	} else if (type == "table") {
-		$(".modal_body .right").find(".text").each(function(index) {
-			var $text = $(this);
-			var dataid;
-			var jsondata = {};
-			$text.find("div").each(function(index) {
-				var $div = $(this);
-				var $input = $div.find("input");
-				if (index==0){
-					dataid = $div.find("input").data("id");
-				}
-				if ($div.attr("name") == "mainname") {
-					jsondata.mainname = $div.text();
-				}
-				if ($input.attr("name")) {
-					jsondata[$input.attr("name")] = $input.val();
-				}
-			})
-			if(dataid) {
-				jsondata.id = dataid;
-			}
-			returnarr.push(jsondata);
-		})
-	}
-	console.log(returnarr);
-}
-Showcase.prototype.initType = function(type) {
-	this.type = type;
-};
-Showcase.prototype.initData = function(data) {
-	if (data instanceof Array) {
-		this.arrData = data;
-	}
-};
-Showcase.prototype.createInLable = function() {
-	var html = this.makehtml();
-	$("body").append(html);
-	this.initLeftClick();
-	this.elementEvent();
-};
-Showcase.prototype.makehtml = function() {
-	var returnhtml = "";
-	var arrData = this.arrData;
-	var context = this.context;
-	var Farr = createArr(); //解析了传过来的数据
-	var type = this.type;
-	var dataid;
-	returnhtml +=
-		'<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body">';
-	if (Farr[0] && Farr[0].inclazz) {
-		returnhtml += '<div class="left"><div class="list">';
-		for (var arr of Farr) {
-			var clazzname = arr.inclazz;
-			returnhtml += '<div>' + clazzname + '</div>';
 		}
-		returnhtml += '</div></div><div class="right"><div class="content">';
-		for (var arr of Farr) {
-			var clazzname = arr.inclazz;
-			returnhtml += '<div class="title"><div>' + clazzname + '</div></div>';
-			for (var Carr of arr.list) {
-				returnhtml += '<div class="text">';
-				for (var json of Carr) {
-					if (json.id) {
-						dataid = json.id;
-						break;
-					}
-				}
-				if (type == "checkbox" || type == "radio") {
-					returnhtml += makeclickbox(dataid);
-				}
-				for (var json of Carr) {
-					if (!json.id) {
-						returnhtml += makediv(json);
-					}
-				}
-				returnhtml += '</div>';
-			}
-		}
-	} else {
-		returnhtml += '<div class="right" style="width:100%"><div class="content">';
-		for (var arr of Farr) {
-			for (var Carr of arr) {
-				returnhtml += '<div class="text">';
-				for (var json of Carr) {
-					if (json.id) {
-						dataid = json.id;
-						break;
-					}
-				}
-				if (type == "checkbox" || type == "radio") {
-					returnhtml += makeclickbox(dataid);
-				}
-				for (var json of Carr) {
-					if (!json.id) {
-						returnhtml += makediv(json);
-					}
-				}
-				returnhtml += '</div>';
-			}
+		this.redata = returnarr;
+		if (this.clickconfirm != undefined) {
+			this.clickconfirm();
 		}
 	}
-	returnhtml += '</div></div></div>' +
-		'<div class="modal_buttonbox">' +
-		'<input class="t_button" type="button" data-btn="confirm" value="确定"/>' +
-		'<input class="t_button" type="button" data-btn="cancel" value="取消"/>' +
-		'</div></div></div>';
-
-	function makeclickbox(id) {
-		var divhtml = "";
-		if (type == "checkbox") {
-			divhtml += '<div name="checkbox"><input type="checkbox"';
-			if (id) {
-				divhtml += ' data-id="' + id + '"';
-			}
-			divhtml += ' /></div>';
-		} else if (type == "radio") {
-			divhtml += '<div name="radio"><input type="radio" name="s_radio"';
-			if (id) {
-				divhtml += ' data-id="' + id + '"';
-			}
-			divhtml += ' /></div>';;
-		}
-		return divhtml;
+	//点击取消按钮的默认事件
+	Showcase.prototype.cancelBack = function() {
+		return true;
 	}
-
-	function makediv(json) {
-		var divhtml = "";
-		if (json.mainname) {
-			divhtml += '<div name="mainname" style="width:' + json.width + '"';
-			if (dataid && (type != "checkbox" && type != "radio")) {
-				divhtml += ' data-id="' + dataid + '"';
-			}
-			divhtml += '>' + json.mainname + '</div>';
-		} else {
-			divhtml += '<div style="width:' + json.width + '">' + json.context + '</div>';
-		}
-		return divhtml;
+	//设置点击确认按钮后追加在返回方法后的方法
+	Showcase.prototype.initclickconfirm = this.clickconfirm;
+	//返回callback之中获得的值的方法
+	Showcase.prototype.callData = function() {
+		return this.redata;
 	}
-
-	function createArr() {
-		var Farr = [];
-		for (var linearr of arrData) {
-			var mainname;
-			for (var brokarr of linearr) {
-				if (brokarr.mainname) {
-					mainname = brokarr.mainname;
-					break;
-				}
+	//设置弹窗类型(alert,confirm,table,radio,table,free)
+	Showcase.prototype.initType = function(type) {
+		this.type = type;
+	};
+	//给弹窗传弹窗中所使用的参数
+	Showcase.prototype.initData = function(data) {
+		if (data instanceof Array) {
+			this.arrData = data;
+		} else if (typeof(data) == "string") {
+			this.context = data;
+		}
+	};
+	//往页面之中的body中添加弹窗
+	Showcase.prototype.createInLable = function() {
+		var html = this.makehtml();
+		$("body").append(html);
+		this.initLeftClick();
+		this.elementEvent();
+	};
+	//点击确认按钮后追加在返回方法后的方法
+	Showcase.prototype.clickconfirm = function() {}
+	//生成弹窗的html
+	Showcase.prototype.makehtml = function() {
+		var returnhtml = "";
+		var arrData = this.arrData;
+		var context = this.context;
+		var Farr = createArr(); //解析了传过来的数据
+		var type = this.type;
+		var dataid;
+		returnhtml +=
+			'<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body">';
+		if (type == "free") {
+			returnhtml += context;
+		} else if (Farr[0] && Farr[0].inclazz) {
+			returnhtml += '<div class="left"><div class="list">';
+			for (var arr of Farr) {
+				var clazzname = arr.inclazz;
+				returnhtml += '<div>' + clazzname + '</div>';
 			}
-			if (mainname) {
-				var inflag = true;
-				var listArr = [];
-				var Fvalue = mainname.charAt(0); //获得第一个字符
-				var inclazz = judgeString(Fvalue);
-				for (var i = 0; i < Farr.length; i++) {
-					if (Farr[i].inclazz == inclazz) {
-						Farr[i].list.push(linearr);
-						inflag = false;
-						break;
-					}
-				}
-				if (inflag) {
-					var Fdata = {};
-					Fdata.inclazz = inclazz;
-					listArr.push(linearr);
-					Fdata.list = listArr;
-					var flag = true;
-					//在这里要做一个排序
-					for (var i = 0; i < Farr.length; i++) {
-						var arr = Farr[i];
-						if (inclazz < arr.inclazz) {
-							Farr.splice(i, 0, Fdata);
-							flag = false;
+			returnhtml += '</div></div><div class="right"><div class="content">';
+			for (var arr of Farr) {
+				var clazzname = arr.inclazz;
+				returnhtml += '<div class="title"><div>' + clazzname + '</div></div>';
+				for (var Carr of arr.list) {
+					returnhtml += '<div class="text">';
+					for (var json of Carr) {
+						if (json.id) {
+							dataid = json.id;
 							break;
 						}
 					}
-					if (flag) {
-						Farr.push(Fdata);
+					if (type == "checkbox" || type == "radio") {
+						returnhtml += makeclickbox(dataid);
 					}
+					for (var json of Carr) {
+						if (!json.id) {
+							returnhtml += makediv(json);
+						}
+					}
+					returnhtml += '</div>';
 				}
-
-			} else {
-				Farr = arrData;
 			}
-		}
-		return Farr;
-	}
-
-	function judgeString(value) {
-		var returnStr = "";
-		var regzh = /[\u4e00-\u9fa5]/;
-		var regnum = /\d/;
-		if (regnum.exec(value)) {
-			returnStr = "0~9";
-		} else if (regzh.exec(value)) {
-			returnStr = "字母" + PinyinHelper.getShortPinyin(value).toUpperCase();
+			returnhtml += '</div></div>';
 		} else {
-			returnStr = "#";
-		}
-		return returnStr;
-	}
-	return returnhtml;
-};
-Showcase.prototype.initLeftClick = function() {
-	$(".modal_body .left .list div").bind("click", function() {
-		var $div = $(this);
-		var dival = $div.text();
-		var $right = $(".right");
-		var $content = $right.find(".content");
-		$(".modal_body").find(".title").each(function(index) {
-			var $title = $(this);
-			var titval = $title.find("div").text();
-			if (dival == titval) {
-				$right.animate({
-					scrollTop: ($title.offset().top - $content.offset().top)
-				}, 800);
-			}
-		});
-	})
-};
-Showcase.prototype.elementEvent = function() {
-	var show = this;
-	$(".showcasebox").find("input[type=button]").each(function(index) {
-		var $btn = $(this);
-		$btn.bind("click", function() {
-			var btnname = $btn.data("btn");
-			if (btnname) {
-				if (btnname == "confirm") {
-					var flag = show.callBack();
-					if(flag){
-						$(".shadetier").remove();
+			returnhtml += '<div class="right" style="width:100%"><div class="content">';
+			for (var arr of Farr) {
+				for (var Carr of arr) {
+					returnhtml += '<div class="text">';
+					for (var json of Carr) {
+						if (json.id) {
+							dataid = json.id;
+							break;
+						}
 					}
-				} else if (btnname == "cancel") {
-					$(".shadetier").remove();
+					if (type == "checkbox" || type == "radio") {
+						returnhtml += makeclickbox(dataid);
+					}
+					for (var json of Carr) {
+						if (!json.id) {
+							returnhtml += makediv(json);
+						}
+					}
+					returnhtml += '</div></div>';
 				}
 			}
-		})
-	})
-	$(".showcasebox").find(".modal_close").bind("click", function() {
-		$(".shadetier").remove();
-	})
+			returnhtml += '</div>';
+		}
+		returnhtml += '</div>' +
+			'<div class="modal_buttonbox">' +
+			'<input class="t_button" type="button" data-btn="confirm" value="确定"/>' +
+			'<input class="t_button" type="button" data-btn="cancel" value="取消"/>' +
+			'</div></div></div>';
 
-};;
+		function makeclickbox(id) {
+			var divhtml = "";
+			if (type == "checkbox") {
+				divhtml += '<div name="checkbox"><input type="checkbox"';
+				if (id) {
+					divhtml += ' data-id="' + id + '"';
+				}
+				divhtml += ' /></div>';
+			} else if (type == "radio") {
+				divhtml += '<div name="radio"><input type="radio" name="s_radio"';
+				if (id) {
+					divhtml += ' data-id="' + id + '"';
+				}
+				divhtml += ' /></div>';;
+			}
+			return divhtml;
+		}
+
+		function makediv(json) {
+			var divhtml = "";
+			if (json.mainname) {
+				divhtml += '<div name="mainname" style="width:' + json.width + '"';
+				if (dataid && (type != "checkbox" && type != "radio")) {
+					divhtml += ' data-id="' + dataid + '"';
+				}
+				divhtml += '>' + json.mainname + '</div>';
+			} else {
+				divhtml += '<div style="width:' + json.width + '">' + json.context + '</div>';
+			}
+			return divhtml;
+		}
+
+		function createArr() {
+			var Farr = [];
+			if (type == "free") {
+				return Farr;
+			}
+			for (var linearr of arrData) {
+				var mainname;
+				for (var brokarr of linearr) {
+					if (brokarr.mainname) {
+						mainname = brokarr.mainname;
+						break;
+					}
+				}
+				if (mainname) {
+					var inflag = true;
+					var listArr = [];
+					var Fvalue = mainname.charAt(0); //获得第一个字符
+					var inclazz = judgeString(Fvalue);
+					for (var i = 0; i < Farr.length; i++) {
+						if (Farr[i].inclazz == inclazz) {
+							Farr[i].list.push(linearr);
+							inflag = false;
+							break;
+						}
+					}
+					if (inflag) {
+						var Fdata = {};
+						Fdata.inclazz = inclazz;
+						listArr.push(linearr);
+						Fdata.list = listArr;
+						var flag = true;
+						//在这里要做一个排序
+						for (var i = 0; i < Farr.length; i++) {
+							var arr = Farr[i];
+							if (inclazz < arr.inclazz) {
+								Farr.splice(i, 0, Fdata);
+								flag = false;
+								break;
+							}
+						}
+						if (flag) {
+							Farr.push(Fdata);
+						}
+					}
+
+				} else {
+					Farr = arrData;
+				}
+			}
+			return Farr;
+		}
+
+		function judgeString(value) {
+			var returnStr = "";
+			var regzh = /[\u4e00-\u9fa5]/;
+			var regnum = /\d/;
+			if (regnum.exec(value)) {
+				returnStr = "0~9";
+			} else if (regzh.exec(value)) {
+				returnStr = "字母" + PinyinHelper.getShortPinyin(value).toUpperCase();
+			} else {
+				returnStr = "#";
+			}
+			return returnStr;
+		}
+		return returnhtml;
+	};
+	//为弹窗左侧列表页绑定事件
+	Showcase.prototype.initLeftClick = function() {
+		$(".modal_body .left .list div").bind("click", function() {
+			var $div = $(this);
+			var dival = $div.text();
+			var $right = $(".right");
+			var $content = $right.find(".content");
+			$(".modal_body").find(".title").each(function(index) {
+				var $title = $(this);
+				var titval = $title.find("div").text();
+				if (dival == titval) {
+					$right.animate({
+						scrollTop: ($title.offset().top - $content.offset().top)
+					}, 800);
+				}
+			});
+		})
+	};
+	//弹窗之中各种组件的默认事件
+	Showcase.prototype.elementEvent = function() {
+		var show = this;
+		$(".showcasebox").find("input[type=button]").each(function(index) {
+			var $btn = $(this);
+			$btn.bind("click", function() {
+				var btnname = $btn.data("btn");
+				if (btnname) {
+					if (btnname == "confirm") {
+						var flag = show.callBack();
+						if (flag || flag == undefined) {
+							$(".shadetier").remove();
+						}
+					} else if (btnname == "cancel") {
+						var flag = show.cancelBack();
+						if (flag || flag == undefined) {
+							$(".shadetier").remove();
+						}
+					}
+				}
+			})
+		})
+		$(".showcasebox").find(".modal_close").bind("click", function() {
+			$(".shadetier").remove();
+		})
+
+	};
+	
+	//往win中写入方法主体。
+	win.Showcase = Showcase;
+}(window, document);
+
 ! function(n) {
 	function g(h) {
 		if (i[h])

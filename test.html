@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/printarr.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<script>
+			var farr = [];
+			var carr = [];
+
+			for (var i = 0; i < 3; i++) {
+				var linedata = {
+					departid: "123" + i,
+					departname: "大西瓜" + i
+				}
+				carr.push(linedata);
+			}
+			for (var arr of carr) {
+				var mainname = {
+					mainname: arr.departname,
+					width: "30%"
+				}
+				var text = {
+					context: "<input type='text' name='text' readonly/>",
+					width: "40%"
+				}
+				var button = {
+					context: "<input type='button' onclick='getpeople()' value='选择工作人员'/>",
+					width: "30%"
+				}
+				var id = {
+					id: arr.departid
+				}
+				var a = [];
+				a.push(mainname);
+				a.push(text);
+				a.push(button);
+				a.push(id);
+				farr.push(a);
+			}
+			var print = new PrintData(farr,true);
+			console.log(print.printout());
+		</script>
+	</body>
+</html>
