@@ -6,6 +6,7 @@
 		this.createnow = true;
 		this.close = true;
 		this.redata = "";
+		this.buttonflag = true;
 		if (data instanceof Object) {
 			if (data.type != undefined) {
 				this.type = data.type;
@@ -27,6 +28,9 @@
 			}
 			if (data.close != undefined) {
 				this.close = data.close;
+			}
+			if (data.buttonflag != undefined) {
+				this.buttonflag = data.buttonflag;
 			}
 		} else if (data instanceof String) {
 			this.context = data;
@@ -150,11 +154,29 @@
 		var returnhtml = "";
 		var arrData = this.arrData;
 		var context = this.context;
-		var Farr = createArr(); //解析了传过来的数据
+		var buttonflag = this.buttonflag;
+		var close = this.close;
+		var Farr = [];
+		if (arrData.length != 0) {
+			Farr = createArr(); //解析了传过来的数据
+		}
 		var type = this.type;
 		var dataid;
-		returnhtml +=
-			'<div class="shadetier"><div class="showcasebox"><div class="modal_header"><span class="modal_close">x</span></div><div class="modal_body">';
+		var showboxname = "showcasebox";
+		if(type == "alert") {
+			showboxname += " showcase_alert";
+		} else if (type == "confirm") {
+			showboxname += " showcase_confirm";
+		}
+		var modal_bodyname = "modal_body";
+		if (!buttonflag) {
+			modal_bodyname += " nobutton"
+		}
+		returnhtml += '<div class="shadetier"><div class="'+showboxname+'"><div class="modal_header">';
+		if (close) {
+			returnhtml += '<span class="modal_close">x</span>';
+		}
+		returnhtml += '</div><div class="'+modal_bodyname+'">';
 		if (type == "free") {
 			returnhtml += context;
 		} else if (Farr[0] && Farr[0].inclazz) {
@@ -187,7 +209,7 @@
 				}
 			}
 			returnhtml += '</div></div>';
-		} else {
+		} else if(Farr[0]) {
 			returnhtml += '<div class="right" style="width:100%"><div class="content">';
 			for (var arr of Farr) {
 				for (var Carr of arr) {
@@ -211,12 +233,16 @@
 			}
 			returnhtml += '</div>';
 		}
-		returnhtml += '</div>' +
-			'<div class="modal_buttonbox">' +
-			'<input class="t_button" type="button" data-btn="confirm" value="确定"/>' +
-			'<input class="t_button" type="button" data-btn="cancel" value="取消"/>' +
-			'</div></div></div>';
-
+		returnhtml += '</div>';
+		if (buttonflag) {
+			 returnhtml += '<div class="modal_buttonbox">' +
+				'<input class="t_button" type="button" data-btn="confirm" value="确定"/>';
+			if (type != "alert") {
+				returnhtml += '<input class="t_button" type="button" data-btn="cancel" value="取消"/>';
+			}
+			returnhtml += '</div>';
+		}
+		returnhtml += '</div></div>';
 		function makeclickbox(id) {
 			var divhtml = "";
 			if (type == "checkbox") {

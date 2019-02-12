@@ -13,12 +13,14 @@
 				display: flex;
 				flex-wrap: wrap;
 			}
+
 			.asd {
 				display: flex;
 				flex: 1;
 				align-items: center;
 				justify-content: center;
 			}
+
 			.sgdztext {
 				height: 30px;
 				line-height: 30px;
@@ -31,6 +33,7 @@
 				margin-left: 10px;
 				margin-right: 10px;
 			}
+
 		</style>
 	</head>
 	<body>
@@ -58,47 +61,49 @@
 		</div> -->
 	</body>
 	<script>
-				$(function() {
-					var showcase = new Showcase({
-						type:"checkbox",
-						createnow:false
-					});
-					var farr = [];
-					var carr = [];
-					
-					for (var i = 0 ; i < 3 ; i++) {
-						var linedata = {
-							departid : "123"+i,
-							departname : "大西瓜"+i
-						}
-						carr.push(linedata);
-					}
-					for (var arr of carr) {
-						var mainname = {
-							mainname : arr.departname ,
-							width : "30%"
-						}
-						var text = {
-							context:"<input type='text' name='text' readonly/>",
-							width:"40%"
-						}
-						var button = {
-							context : "<input type='button' onclick='getpeople()' value='选择工作人员'/>",
-							width : "30%"
-						}
-						var id = {
-							id:arr.departid
-						}
-						var a = [];
-						a.push(mainname);
-						a.push(text);
-						a.push(button);
-						a.push(id);
-						farr.push(a);
-					}
-					console.log(farr)
-					showcase.initData(farr);
-					showcase.createInLable();
-				})
+		$(function() {
+			var showcase = new Showcase({
+				type: "alert",
+				createnow: false,
+				buttonflag: false,
+				close: false
+			});
+			var farr = [];
+			var carr = [];
+
+			for (var i = 0; i < 3; i++) {
+				var linedata = {
+					departid: "123" + i,
+					departname: "大西瓜" + i
+				}
+				carr.push(linedata);
+			}
+			for (var arr of carr) {
+				var mainname = {
+					mainname: arr.departname,
+					width: "30%"
+				}
+				var text = {
+					context: "<input type='text' name='text' readonly/>",
+					width: "40%"
+				}
+				var button = {
+					context: "<input type='button' onclick='getpeople()' value='选择工作人员'/>",
+					width: "30%"
+				}
+				var id = {
+					id: arr.departid
+				}
+				var a = [];
+				a.push(mainname);
+				a.push(text);
+				a.push(button);
+				a.push(id);
+				farr.push(a);
+			}
+			console.log(farr)
+			showcase.initData(farr);
+			showcase.createInLable();
+		})
 	</script>
 </html>

@@ -13,16 +13,23 @@
 	background-color: #BFBFBF;
 	z-index: 1000;
 }
-
-.showcasebox {
-	background: #F5F5F5;
+.showcasebox,.showcase_alert,.showcase_confirm {
 	width: 600px;
 	height: 400px;
+	background: #F5F5F5;
 	border-radius: 5px;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
 	display: -webkit-flex;
 	display: flex;
 	flex-direction: column;
+}
+.showcase_alert {
+	width: 440px;
+	height: 320px;
+}
+.showcase_confirm{
+    width: 560px;
+    height: 360px;
 }
 
 .modal_header {
@@ -65,7 +72,9 @@
 	height: 64%;
 	padding: 14px;
 }
-
+.nobutton {
+	height: 80%;
+}
 .modal_body .left {
 	width: 16%;
 	height: 100%;
