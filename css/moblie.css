@@ -1,0 +1,139 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.switch_box {
+	width: 34px;
+	height: 20px;
+	position: relative;
+	left: -34px;
+}
+
+.switch_strip {
+	display: inline-block;
+	width: 34px;
+	border-radius: 6px;
+	height: 12px;
+	position: absolute;
+	top: 4px;
+	left: 0;
+	z-index: 5;
+}
+
+.switch_strip_true {
+	background: #c8c5ff;
+}
+
+.switch_strip_false {
+	background: #b2b2b2;
+}
+
+.switch_button {
+	display: inline-block;
+	border-radius: 50%;
+	box-shadow: 0 2px 5px #888888;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	z-index: 10;
+}
+
+.switch_button_true {
+	background: #5562ff;
+}
+
+.switch_button_false {
+	background: #FFFFFF;
+}
+
+.mobile_alertWindow {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: #ffffff;
+	z-index: 1050;
+}
+
+.mobile_alertWindow .mobile_alertWindow_nav {
+	position: relative;
+	top: 0;
+	left: 0;
+	padding-top: 25px;
+	width: 100%;
+	background: #0e90d2;
+	padding-left: 1em;
+	padding-right: 1em;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.mobile_alertWindow .mobile_alertWindow_nav .back {
+	margin-top: 8px;
+	margin-bottom: 0;
+	padding: .5em 1em;
+	line-height: 1.2;
+	text-align: center;
+	white-space: nowrap;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 0;
+	cursor: pointer;
+	outline: 0;
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 900;
+	color: #FFFFFF;
+}
+
+.mobile_alertWindow .mobile_alertWindow_nav .back:hover {
+	background-color: #0c79b1;
+}
+
+
+.mobile_listack {}
+
+.mobile_listack .title {
+	border-bottom: 0;
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.mobile_listack .title:hover {
+	background-colorL: #FFFFFF;
+}
+
+.mobile_listack li {
+	border-bottom: 1px solid #6f6f6f;
+	height: 42px;
+	line-height: 42px;
+	margin-left: 8px;
+	text-indent: 4px;
+
+}
+
+.mobile_listack li:last-child {
+	border-bottom: 0;
+}
+
+.mobile_listack li:hover {
+	background-color: #f1fefe;
+}
+
+.mobile_listack li .first {
+	font-size: 16px;
+	font-family: "宋体";
+}
+
+.mobile_listack li .end {
+	float: right;
+	padding-right: 35px;
+	font-family: "宋体";
+	font-size: 14px;
+	font-weight: 200;
+	color: #6d6d6d;
+}

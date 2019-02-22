@@ -7,9 +7,13 @@
 		this.close = true;
 		this.redata = "";
 		this.buttonflag = true;
+		this.title = "";
 		if (data instanceof Object) {
 			if (data.type != undefined) {
 				this.type = data.type;
+			}
+			if (data.title != undefined) {
+				this.title = data.title;
 			}
 			if (data.data != undefined) {
 				this.arrData = data.data;
@@ -156,6 +160,7 @@
 		var context = this.context;
 		var buttonflag = this.buttonflag;
 		var close = this.close;
+		var title = this.title;
 		var Farr = [];
 		if (arrData.length != 0) {
 			Farr = createArr(); //解析了传过来的数据
@@ -173,6 +178,9 @@
 			modal_bodyname += " nobutton"
 		}
 		returnhtml += '<div class="shadetier"><div class="'+showboxname+'"><div class="modal_header">';
+		if (title!="") {
+			returnhtml += title;
+		}
 		if (close) {
 			returnhtml += '<span class="modal_close">x</span>';
 		}
